@@ -1,6 +1,5 @@
-package com.eafrey.backend.Controller;
+package com.eafrey.backend.controller;
 
-import org.hibernate.validator.constraints.URL;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
