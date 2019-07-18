@@ -7,3 +7,6 @@ spring:
     username: eafrey
     password: eafreypwd
     url: jdbc:mysql://localhost:3306/eafrey?createDatabaseIfNotExist=true
+
+logging:
+  file: /opt/back-end/back-end-server.log
