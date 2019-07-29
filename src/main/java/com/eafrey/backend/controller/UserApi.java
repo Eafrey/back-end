@@ -19,6 +19,6 @@ public class UserApi {
     public ResponseEntity createUser(@RequestBody User user) {
         log.info("request add user {}", user);
 //        userService.save(user);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("ok");
     }
 }
