@@ -1,42 +1,59 @@
 package com.eafrey.backend.service;
 
 import com.eafrey.backend.entity.Article;
-import com.eafrey.backend.entity.Tag;
+import com.eafrey.backend.entity.Catalog;
+import com.eafrey.backend.model.ArticleRequest;
 import com.eafrey.backend.repository.ArticleRepository;
-import com.eafrey.backend.repository.ArticleTagRepository;
-import com.eafrey.backend.repository.TagRepository;
+import com.eafrey.backend.repository.CatalogRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final ArticleTagRepository articleTagRepository;
-    private final TagRepository tagRepository;
+    private final CatalogRepository catalogRepository;
 
-    public ArticleService(ArticleRepository articleRepository, ArticleTagRepository articleTagRepository, TagRepository tagRepository) {
+    public ArticleService(ArticleRepository articleRepository, CatalogRepository catalogRepository) {
         this.articleRepository = articleRepository;
-        this.articleTagRepository = articleTagRepository;
-        this.tagRepository = tagRepository;
+        this.catalogRepository = catalogRepository;
     }
 
-
-    public Article saveArticle(Article articleReuqest) {
-        return articleRepository.save(articleReuqest);
+    public Article saveArticle(ArticleRequest articleReuqest) {
+        Long catalogId = getCatalogId(articleReuqest);
+        Article article = articleReuqest.toArticle();
+        article.setCatalogId(catalogId);
+        return articleRepository.save(article);
     }
 
-    public List<String> getAllTags() {
-        List<Tag> tags = tagRepository.findAll();
-        return tags.stream().map(Tag::getTagName).collect(Collectors.toList());
+    private Long getCatalogId(ArticleRequest articleReuqest) {
+        String catalogName = articleReuqest.getCatalogName();
+        Optional<Catalog> catalog = catalogRepository.findByCatalogName(catalogName);
+        if (catalog.isPresent()) {
+            return catalog.get().getId();
+        } else {
+            return catalogRepository.save(new Catalog(catalogName)).getId();
+
+        }
+    }
+
+    public List<String> getAllCatalogs() {
+        List<Catalog> tags = catalogRepository.findAll();
+        return tags.stream().map(Catalog::getCatalogName).collect(Collectors.toList());
     }
 
     public Page<Article> getArticles(Pageable pageable) {
         System.out.println();
         return articleRepository.findAll(pageable);
+    }
+
+    public Article getArticle(Long articleId) {
+        Optional<Article> article = articleRepository.findById(articleId);
+        return Optional.ofNullable(article.get()).orElse(null);
     }
 }
