@@ -2,17 +2,15 @@ package com.eafrey.backend.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @NoArgsConstructor
 @Table(name = "catalog")
+@EntityListeners(AuditingEntityListener.class)
 public class CatalogEntity {
 
     @Id

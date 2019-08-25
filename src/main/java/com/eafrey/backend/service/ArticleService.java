@@ -2,9 +2,13 @@ package com.eafrey.backend.service;
 
 import com.eafrey.backend.entity.ArticleEntity;
 import com.eafrey.backend.entity.CatalogEntity;
+import com.eafrey.backend.entity.UserEntity;
+import com.eafrey.backend.exception.BadRequestException;
 import com.eafrey.backend.model.ArticleRequest;
 import com.eafrey.backend.repository.ArticleRepository;
 import com.eafrey.backend.repository.CatalogRepository;
+import com.eafrey.backend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,19 +20,41 @@ import java.util.stream.Collectors;
 @Service
 public class ArticleService {
 
+    private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
     private final CatalogRepository catalogRepository;
 
-    public ArticleService(ArticleRepository articleRepository, CatalogRepository catalogRepository) {
+    @Autowired
+    public ArticleService(ArticleRepository articleRepository, CatalogRepository catalogRepository, UserRepository userRepository) {
         this.articleRepository = articleRepository;
         this.catalogRepository = catalogRepository;
+        this.userRepository = userRepository;
     }
 
-    public ArticleEntity saveArticle(ArticleRequest articleReuqest) {
+    public ArticleEntity saveArticle(ArticleRequest articleReuqest) throws BadRequestException {
         Long catalogId = getCatalogId(articleReuqest);
+
+        Long userId = getUserId(articleReuqest);
+        if (userId == null) {
+            throw new BadRequestException("use id is not correct");
+        }
+
         ArticleEntity articleEntity = articleReuqest.toArticleEntity();
         articleEntity.setCatalogId(catalogId);
         return articleRepository.save(articleEntity);
+    }
+
+    private Long getUserId(ArticleRequest articleReuqest) {
+        Long id = articleReuqest.getUserId();
+        if (articleReuqest.getUserId() != null && !userRepository.findById(id).isPresent()) {
+            return null;
+        }
+
+        if (articleReuqest.getUserName() != null) {
+            Optional<UserEntity> userEntity = userRepository.findByUserName(articleReuqest.getUserName());
+            return Optional.ofNullable(userEntity.get().getId()).orElse(null);
+        }
+        return null;
     }
 
     private Long getCatalogId(ArticleRequest articleReuqest) {

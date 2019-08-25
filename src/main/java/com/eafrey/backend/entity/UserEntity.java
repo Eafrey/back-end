@@ -6,42 +6,29 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
-@Table(name = "article")
+@Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
-public class ArticleEntity {
-
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private String content;
-
+    private boolean gender;
     private String userName;
-    private Long catalogId;
-    private Long userId;
-    @OneToOne
-    @JoinColumn(name = "id")
-    private UserEntity userEntity;
-    @OneToOne
-    @JoinColumn(name = "id")
-    private CatalogEntity catalogEntity;
-
-    private Long viewCount;
-    private Long commentsCount;
-    private Long likeCount;
-
-    private String tags;
+    private String userPassword;
+    private String avatar;
+    private String email;
+    private String phoneNumber;
 
     @CreatedDate
     @Column(name = "creation_time", nullable = false, updatable = false, insertable = false)
-    private Date creationTime;
+    private ZonedDateTime creationTime;
 
     @LastModifiedDate
     @Column(name = "modification_time", nullable = false, insertable = false)
-    private Date modificationTime;
+    private ZonedDateTime modificationTime;
 }

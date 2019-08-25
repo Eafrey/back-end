@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 public class ArticleRequest {
     private String title;
-    private Long authorId;
+    private Long userId;
+    private String userName;
     private String content;
 
     private Long viewCount;
@@ -20,7 +21,8 @@ public class ArticleRequest {
     public ArticleEntity toArticleEntity() {
         ArticleEntity article = new ArticleEntity();
         article.setTitle(title);
-        article.setAuthorId(authorId);
+        article.setUserId(userId);
+        article.setUserName(userName);
         article.setContent(content);
         article.setViewCount(viewCount);
         article.setCommentsCount(commentsCount);

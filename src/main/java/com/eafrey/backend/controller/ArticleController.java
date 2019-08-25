@@ -1,9 +1,11 @@
 package com.eafrey.backend.controller;
 
 import com.eafrey.backend.entity.ArticleEntity;
+import com.eafrey.backend.exception.BadRequestException;
 import com.eafrey.backend.model.ArticleRequest;
 import com.eafrey.backend.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +24,13 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
+    @Autowired
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
 
     @PostMapping
-    public ArticleEntity saveArticle(@RequestBody ArticleRequest articleReuqest) {
+    public ArticleEntity saveArticle(@RequestBody ArticleRequest articleReuqest) throws BadRequestException {
         return articleService.saveArticle(articleReuqest);
     }
 

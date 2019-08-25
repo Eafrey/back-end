@@ -2,6 +2,7 @@ package com.eafrey.backend.controller;
 
 import com.eafrey.backend.service.FileUploadService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ public class FileUploadController {
 
     private final FileUploadService fileUploadService;
 
+    @Autowired
     public FileUploadController(FileUploadService fileUploadService) {
         this.fileUploadService = fileUploadService;
     }
