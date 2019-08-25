@@ -1,7 +1,7 @@
 package com.eafrey.backend.service;
 
-import com.eafrey.backend.entity.Article;
-import com.eafrey.backend.entity.Catalog;
+import com.eafrey.backend.entity.ArticleEntity;
+import com.eafrey.backend.entity.CatalogEntity;
 import com.eafrey.backend.model.ArticleRequest;
 import com.eafrey.backend.repository.ArticleRepository;
 import com.eafrey.backend.repository.CatalogRepository;
@@ -24,36 +24,36 @@ public class ArticleService {
         this.catalogRepository = catalogRepository;
     }
 
-    public Article saveArticle(ArticleRequest articleReuqest) {
+    public ArticleEntity saveArticle(ArticleRequest articleReuqest) {
         Long catalogId = getCatalogId(articleReuqest);
-        Article article = articleReuqest.toArticle();
-        article.setCatalogId(catalogId);
-        return articleRepository.save(article);
+        ArticleEntity articleEntity = articleReuqest.toArticleEntity();
+        articleEntity.setCatalogId(catalogId);
+        return articleRepository.save(articleEntity);
     }
 
     private Long getCatalogId(ArticleRequest articleReuqest) {
         String catalogName = articleReuqest.getCatalogName();
-        Optional<Catalog> catalog = catalogRepository.findByCatalogName(catalogName);
+        Optional<CatalogEntity> catalog = catalogRepository.findByCatalogName(catalogName);
         if (catalog.isPresent()) {
             return catalog.get().getId();
         } else {
-            return catalogRepository.save(new Catalog(catalogName)).getId();
+            return catalogRepository.save(new CatalogEntity(catalogName)).getId();
 
         }
     }
 
     public List<String> getAllCatalogs() {
-        List<Catalog> tags = catalogRepository.findAll();
-        return tags.stream().map(Catalog::getCatalogName).collect(Collectors.toList());
+        List<CatalogEntity> tags = catalogRepository.findAll();
+        return tags.stream().map(CatalogEntity::getCatalogName).collect(Collectors.toList());
     }
 
-    public Page<Article> getArticles(Pageable pageable) {
+    public Page<ArticleEntity> getArticles(Pageable pageable) {
         System.out.println();
         return articleRepository.findAll(pageable);
     }
 
-    public Article getArticle(Long articleId) {
-        Optional<Article> article = articleRepository.findById(articleId);
-        return Optional.ofNullable(article.get()).orElse(null);
+    public ArticleEntity getArticle(Long articleId) {
+        Optional<ArticleEntity> articleEntity = articleRepository.findById(articleId);
+        return Optional.ofNullable(articleEntity.get()).orElse(null);
     }
 }

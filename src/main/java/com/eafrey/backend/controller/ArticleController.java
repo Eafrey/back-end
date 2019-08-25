@@ -1,6 +1,6 @@
 package com.eafrey.backend.controller;
 
-import com.eafrey.backend.entity.Article;
+import com.eafrey.backend.entity.ArticleEntity;
 import com.eafrey.backend.model.ArticleRequest;
 import com.eafrey.backend.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,21 +18,21 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/articles")
-public class ArticleApi {
+public class ArticleController {
 
     private final ArticleService articleService;
 
-    public ArticleApi(ArticleService articleService) {
+    public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
 
     @PostMapping
-    public Article saveArticle(@RequestBody ArticleRequest articleReuqest) {
+    public ArticleEntity saveArticle(@RequestBody ArticleRequest articleReuqest) {
         return articleService.saveArticle(articleReuqest);
     }
 
     @GetMapping("/{articleId}")
-    public Article getArticle(@PathVariable Long articleId) {
+    public ArticleEntity getArticle(@PathVariable Long articleId) {
         return articleService.getArticle(articleId);
     }
 
@@ -42,7 +42,7 @@ public class ArticleApi {
     }
 
     @GetMapping()
-    public Page<Article> getArticles(Pageable pageable) {
+    public Page<ArticleEntity> getArticles(Pageable pageable) {
         return articleService.getArticles(pageable);
     }
 }

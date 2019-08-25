@@ -11,11 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-public class FileUploadApi {
+public class FileUploadController {
 
     private final FileUploadService fileUploadService;
 
-    public FileUploadApi(FileUploadService fileUploadService) {
+    public FileUploadController(FileUploadService fileUploadService) {
         this.fileUploadService = fileUploadService;
     }
 

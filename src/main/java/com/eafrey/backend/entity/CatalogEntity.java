@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @NoArgsConstructor
 @Table(name = "catalog")
-public class Catalog {
+public class CatalogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Catalog {
 
     private String catalogName;
 
-    public Catalog(String catalogName) {
+    public CatalogEntity(String catalogName) {
         this.catalogName = catalogName;
     }
 }

@@ -14,7 +14,7 @@ CREATE TABLE `article`
     PRIMARY KEY (`id`),
     KEY (`author_id`),
     UNIQUE KEY (`title`),
-    KEY (`catalog_id`)
+    FOREIGN KEY (`catalog_id`) references `catalog`(`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;

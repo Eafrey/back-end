@@ -1,6 +1,6 @@
 package com.eafrey.backend.model;
 
-import com.eafrey.backend.entity.Article;
+import com.eafrey.backend.entity.ArticleEntity;
 import lombok.Data;
 
 @Data
@@ -17,8 +17,8 @@ public class ArticleRequest {
 
     private String catalogName;
 
-    public Article toArticle() {
-        Article article = new Article();
+    public ArticleEntity toArticleEntity() {
+        ArticleEntity article = new ArticleEntity();
         article.setTitle(title);
         article.setAuthorId(authorId);
         article.setContent(content);
