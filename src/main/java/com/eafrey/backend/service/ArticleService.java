@@ -39,9 +39,18 @@ public class ArticleService {
             throw new BadRequestException("use id is not correct");
         }
 
+        checkExists(articleReuqest);
+
         ArticleEntity articleEntity = articleReuqest.toArticleEntity();
         articleEntity.setCatalogId(catalogId);
         return articleRepository.save(articleEntity);
+    }
+
+    private void checkExists(ArticleRequest articleReuqest) throws BadRequestException {
+        String titile = articleReuqest.getTitle();
+        if (articleRepository.findByTitle(titile).isPresent()) {
+            throw new BadRequestException("article is already exists for the same title");
+        }
     }
 
     private Long getUserId(ArticleRequest articleReuqest) {

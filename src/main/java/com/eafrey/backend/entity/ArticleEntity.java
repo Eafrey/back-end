@@ -26,10 +26,10 @@ public class ArticleEntity {
     private Long userId;
     @OneToOne
     @JoinColumn(name = "id")
-    private UserEntity userEntity;
+    private UserEntity userInfo;
     @OneToOne
     @JoinColumn(name = "id")
-    private CatalogEntity catalogEntity;
+    private CatalogEntity catalogInfo;
 
     private Long viewCount;
     private Long commentsCount;

@@ -26,7 +26,7 @@ public class FileUploadController {
         try {
             fileUploadService.uploadImage(file);
         } catch (Exception exception) {
-//            log.error("image upload failed for: {}", exception.getMessage());
+            log.error("image upload failed for: {}", exception.getMessage());
         }
         return ResponseEntity.ok("ok");
     }

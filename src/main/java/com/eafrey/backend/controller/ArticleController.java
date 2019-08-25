@@ -1,8 +1,10 @@
 package com.eafrey.backend.controller;
 
 import com.eafrey.backend.entity.ArticleEntity;
+import com.eafrey.backend.enums.ResponseCodeEnum;
 import com.eafrey.backend.exception.BadRequestException;
 import com.eafrey.backend.model.ArticleRequest;
+import com.eafrey.backend.model.BaseResponse;
 import com.eafrey.backend.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +32,26 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ArticleEntity saveArticle(@RequestBody ArticleRequest articleReuqest) throws BadRequestException {
-        return articleService.saveArticle(articleReuqest);
+    public BaseResponse saveArticle(@RequestBody ArticleRequest articleReuqest) throws BadRequestException {
+        ArticleEntity articleEntity = articleService.saveArticle(articleReuqest);
+        return new BaseResponse(ResponseCodeEnum.SUCCESS, articleEntity);
     }
 
     @GetMapping("/{articleId}")
-    public ArticleEntity getArticle(@PathVariable Long articleId) {
-        return articleService.getArticle(articleId);
+    public BaseResponse getArticle(@PathVariable Long articleId) {
+        ArticleEntity article = articleService.getArticle(articleId);
+        return new BaseResponse(ResponseCodeEnum.SUCCESS, article);
     }
 
     @GetMapping("/catalogs")
-    public List<String> getAllTags() {
-        return articleService.getAllCatalogs();
+    public BaseResponse getAllTags() {
+        List<String> allCatalogs = articleService.getAllCatalogs();
+        return new BaseResponse(ResponseCodeEnum.SUCCESS, allCatalogs);
     }
 
     @GetMapping()
-    public Page<ArticleEntity> getArticles(Pageable pageable) {
-        return articleService.getArticles(pageable);
+    public BaseResponse getArticles(Pageable pageable) {
+        Page<ArticleEntity> articles = articleService.getArticles(pageable);
+        return new BaseResponse(ResponseCodeEnum.SUCCESS, articles);
     }
 }
