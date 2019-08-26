@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  back-end:
+    build: .
+    restart: always
+    hostname: back-end-service
+    container_name: back-end
+    ports:
+      - 8090:8090
+    depends_on:
+      - mysql
+    network_mode: "host"
+    command: ["sh", "-c", "java -jar /back-end.jar"]
+  mysql:
+    build:
+      context: .
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=eafrey
+      - MYSQL_USER=eafrey
+      - MYSQL_PASSWORD=eafreypwd
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    network_mode: "host"
+    restart: always
