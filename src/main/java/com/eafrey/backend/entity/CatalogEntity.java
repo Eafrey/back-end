@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "catalog")
 @EntityListeners(AuditingEntityListener.class)
 public class CatalogEntity {
