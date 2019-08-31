@@ -8,5 +8,5 @@ services:
     container_name: back-end
     ports:
       - 8090:8090
-    network_mode: "bridge"
+    network_mode: "host"
     command: ["sh", "-c", "java -Dspring.profiles.active=prod -jar /back-end.jar"]
