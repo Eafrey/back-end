@@ -8,4 +8,4 @@ UNUSEIMAGES=$(docker images --filter "dangling=true" -q --no-trunc)
 if [ "$UNUSEIMAGES" != "" ]; then
     docker rmi $UNUSEIMAGES
 fi
-docker-compose up -d
+docker-compose up --build -d
