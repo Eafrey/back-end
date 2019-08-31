@@ -9,4 +9,4 @@ services:
     ports:
       - 8090:8090
     network_mode: "host"
-    command: ["sh", "-c", "java -Dspring.profiles.active=prod -jar /back-end.jar"]
+    command: ["sh", "-c", "java -jar /back-end.jar"]
