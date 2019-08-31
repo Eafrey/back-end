@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: eafrey
     password: eafreypwd
     url: jdbc:mysql://39.106.14.252:3306/eafrey?createDatabaseIfNotExist=true&useSSL=false&rewriteBatchedStatements=true
